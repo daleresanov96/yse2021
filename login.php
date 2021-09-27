@@ -75,7 +75,7 @@
 				<input type='password' name='pass' size='5' maxlength='20'
 					placeholder="Password">
 			</p>
-			<p>
+			<p><data value=""></data>
 				<button type="submit" formmethod="POST" name="decision" value="1"
 					id="button">Login</button>
 			</p>
