@@ -13,15 +13,19 @@
  * ①session_status()の結果が「PHP_SESSION_NONE」と一致するか判定する。
  * 一致した場合はif文の中に入る。
  */
-if (/* ①の処理を行う */) {
+if (session_status()==PHP_SESSION_NONE) {
 	//②セッションを開始する
+	session_start();
+	$_SESSION["success"]="";
 }
 
 //③SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if (/* ③の処理を書く */){
+if ($_SESSION["login"] ==False){
 	//④SESSIONの「error2」に「ログインしてください」と設定する。
+	$_SESSION['error2'] ="ログインしてください";
+	header("Location: login.php");//④ログイン画面へ遷移する。
 	//⑤ログイン画面へ遷移する。
-}
+}	
 
 //⑥データベースへ接続し、接続情報を変数に保存する
 
@@ -72,7 +76,7 @@ function getId($id,$con){
 		<?php
 		/*
 		 * ⑬SESSIONの「error」にメッセージが設定されているかを判定する。
-		 * 設定されていた場合はif文の中に入る。
+		 * 設定されていた場合はif文の中に入る。.
 		 */ 
 		if(/* ⑬の処理を書く */){
 			//⑭SESSIONの「error」の中身を表示する。
