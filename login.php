@@ -43,13 +43,14 @@ $password="";
  if ($name&&$password) {
 // 	//⑧名前に「yse」、パスワードに「2021」と設定されているか確認する。設定されていた場合はif文の中に入る
 
-// 	if (/* ⑧の処理を書く */){
+	if ($name='yse'&&$password=2021){
 // 		//⑨SESSIONに名前を設定し、SESSIONの「login」フラグをtrueにする
+ $_SESSION['login']=true;
 // 		//⑩在庫一覧画面へ遷移する
-// 		header(/* ⑩の遷移先を書く */);
+	header("location:zaiko_ichiran.php");
 // 	}else{
 // 		//⑪名前もしくはパスワードが間違っていた場合は、「ユーザー名かパスワードが間違っています」という文言をメッセージを入れる変数に設定する
-// 	}
+ 	}
 }
 
 //⑫SESSIONの「error2」に値が入っているか判定する。入っていた場合はif文の中に入る
