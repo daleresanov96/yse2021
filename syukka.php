@@ -29,7 +29,7 @@ if (/* ③の処理を書く */!$_SESSION["login"]){
 }
 
 //⑥データベースへ接続し、接続情報を変数に保存する
-$link = mysql_connect("127.0.0.1",zaiko2021_yse,2021ziko);
+$link = mysql_connect("127.0.0.1","zaiko2021_yse","2021ziko");
 //⑦データベースで使用する文字コードを「UTF8」にする
 mysql_set_charset("utf8",$link);
 
