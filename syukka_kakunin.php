@@ -9,15 +9,17 @@
 */
 
 //①セッションを開始する
-
+session_start();
 function getByid($id,$con){
 	/* 
 	 * ②書籍を取得するSQLを作成する実行する。
 	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
 	 * SQLの実行結果を変数に保存する。
 	 */
-
+	$sql = "SELECT * FROM books id = {$id}";
+	$stmt = $con->query($sql);
 	//③実行した結果から1レコード取得し、returnで値を返す。
+	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 function updateByid($id,$con,$total){
@@ -26,22 +28,40 @@ function updateByid($id,$con,$total){
 	 * 引数で受け取った$totalの値で在庫数を上書く。
 	 * その際にWHERE句でメソッドの引数に$idに一致する書籍のみ取得する。
 	 */
+
 }
 
 //⑤SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if (/* ⑤の処理を書く */){
+if (isset($_SESSION['login']) && $_SESSION['login']){
 	//⑥SESSIONの「error2」に「ログインしてください」と設定する。
+	$_SESSION['error2'] = 'ログインしてください';
 	//⑦ログイン画面へ遷移する。
+	header('Location: login.php');	
 }
 
 //⑧データベースへ接続し、接続情報を変数に保存する
 
 //⑨データベースで使用する文字コードを「UTF8」にする
+$db_name = 'zaiko2021_yse';
+$db_host = 'localhost';
+$db_port = '3306';
+$db_user = 'zaiko2021_yse';
+$db_password = '2021zaiko';
 
+$dsn = "mysql:dbname={$db_name};host={$db_host};charset=utf8;port={$db_port}";
+try {
+	$pdo = new PDO($dsn, $db_user, $db_password);
+	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+} catch (PDOException $e) {
+	echo "接続失敗: " . $e->getMessage();
+	exit;
+}
 //⑩書籍数をカウントするための変数を宣言し、値を0で初期化する
-
+$book_count = 0;
 //⑪POSTの「books」から値を取得し、変数に設定する。
-foreach(/* ⑪の処理を書く */){
+$book_ids = $_POST['books'];
+foreach($book_ids as $book_id){
 	/*
 	 * ⑫POSTの「stock」について⑩の変数の値を使用して値を取り出す。
 	 * 半角数字以外の文字が設定されていないかを「is_numeric」関数を使用して確認する。
@@ -65,6 +85,7 @@ foreach(/* ⑪の処理を書く */){
 	}
 	
 	//㉒ ⑩で宣言した変数をインクリメントで値を1増やす。
+	$book_count++;
 }
 
 /*
