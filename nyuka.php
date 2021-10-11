@@ -80,16 +80,17 @@ while($row=$st->fetch() ){
 </div>
 
 <form action="nyuka_kakunin.php" method="post">
-	<div id="pagebody">
-		<!-- エラーメッセージ -->
-		<div id="error">
-		<?php
-		/*
-		 * ⑬SESSIONの「error」にメッセージが設定されているかを判定する。
-		 * 設定されていた場合はif文の中に入る。.
-		 */ 
-		if(/* ⑬の処理を書く */){
+<div id="pagebody">
+			<!-- エラーメッセージ -->
+			<div id="error">
+			<?php
+			/*
+			 * ⑬SESSIONの「error」にメッセージが設定されているかを判定する。
+			 * 設定されていた場合はif文の中に入る。
+			 */ 
+			if(@$_SESSION["error"]){
 			//⑭SESSIONの「error」の中身を表示する。
+			echo $_SESSION["error"];
 		}
 		?>
 		</div>
