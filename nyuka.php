@@ -47,8 +47,14 @@ function getId($id,$con){
 	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
 	 * SQLの実行結果を変数に保存する。
 	 */
+	// $id=$_POST["id"]);
+	$pdo = new PDO("mysql:host=localhost;dbname=zaiko2019_yse;charset=utf8;","zaiko2019", "2019zaiko" );
+    $st = $pdo->query("SELECT * FROM books where id =$id");
 
+while($row=$st->fetch() ){
 	//⑫実行した結果から1レコード取得し、returnで値を返す。
+	return $row;
+}
 }
 ?>
 <!DOCTYPE html>
