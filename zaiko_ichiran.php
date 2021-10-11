@@ -6,13 +6,14 @@
 ログアウトボタン押下時に、セッション情報を削除しログイン画面に遷移する。
 【エラー一覧（エラー表示：発生条件）】
 入荷する商品が選択されていません：商品が一つも選択されていない状態で入荷ボタンを押す
-出荷する商品が選択されていません：商品が一つも選択されていない状態で出荷ボタンを押す
+出荷する商品が選択されていません：商品が一つも選択されていない状態で出荷ボタンを押す.
 */
 
 //①セッションを開始する
 session_start();
+$_SESSION["account_name"] = $_SESSION["user"];
 
-// ②SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
+// ②SESSIONの「login」フラグがfalseか判定sする。「login」フラグがfalseの場合はif文の中に入る。
 if ($_SESSION["login"] == false){
 // 	// ③SESSIONの「error2」に「ログインしてください」と設定する。
 	$_SESSION["error2"] = "ログインしてください";
@@ -67,18 +68,13 @@ $statement = $pdo->query($sql);
 				/*
 				 * ⑧SESSIONの「success」にメッセージが設定されているかを判定する。
 				 * 設定されていた場合はif文の中に入る。
-				 */ //debug -> $_SESSION["success"] = "ログインが成功";
-				// debug -> unset($_SESSION["success"]);
+				 */
 				
-				// if(isset($_SESSION["success"])){
+				 if(isset($_SESSION["success"])){
 				// // 	//⑨SESSIONの「success」の中身を表示する。
-				// 	echo "<p>".$_SESSION["success"]."</p>";
-				// 	var_dump($_SESSION["success"]);
-				//}
-				// else
-				// {
-					// echo "<p> エラーがあります　</p>";
-				// }
+				 	echo "<p>".@$_SESSION["success"]."</p>";
+				 	//var_dump($_SESSION["success"]);
+				 }
 				?>
 			</div>
 			
