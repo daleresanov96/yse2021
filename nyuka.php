@@ -31,10 +31,14 @@ if ($_SESSION["login"] ==False){
 
 //⑦データベースで使用する文字コードを「UTF8」にする
 
+$pdo = new PDO("mysql:host=localhost;dbname=zaiko2021_yse;charset=utf8;","zaiko2021", "2021zaiko" );
+    $st = $pdo->query("SELECT * FROM books ");
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
-if(/* ⑧の処理を行う */){
+if(!@($_POST["books"])){
 	//⑨SESSIONの「success」に「出荷する商品が選択されていません」と設定する。
 	//⑩在庫一覧画面へ遷移する。
+	$_SESSION["success"]="入荷する商品が選択されていません";
+	header("Location: zaiko_ichiran.php");
 }
 
 function getId($id,$con){
