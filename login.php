@@ -55,10 +55,11 @@ $password="";
 }
 
 //⑫SESSIONの「error2」に値が入っているか判定する。入っていた場合はif文の中に入る
-// if (/* ⑫の処理を書く */) {
+ if (isset($_REQUEST['check'])) {
 // 	//⑬SESSIONの「error2」の値をエラーメッセージを入れる変数に設定する。
 // 	//⑭SESSIONの「error2」にnullを入れる。
-// }
+   echo "null";
+ }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
