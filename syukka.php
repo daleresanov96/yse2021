@@ -115,12 +115,12 @@ function getId($id,$con){
 				?>
 				<input type="hidde+n" value="<?php $book['id']	/* ⑰ ⑯の戻り値からidを取り出し、設定する */;?>" name="books[]">
 				<tr>
-					<td><?php $book['name'];	/* ⑱ ⑯の戻り値からidを取り出し、表示する */;?></td>
-					<td><?php $book['title'];	/* ⑲ ⑯の戻り値からtitleを取り出し、表示する */;?></td>
-					<td><?php $book['author'];	/* ⑳ ⑯の戻り値からauthorを取り出し、表示する */;?></td>
-					<td><?php $book['salesDate'];	/* ㉑ ⑯の戻り値からsalesDateを取り出し、表示する */;?></td>
-					<td><?php $book['price'];	/* ㉒ ⑯の戻り値からpriceを取り出し、表示する */;?></td>
-					<td><?php $book['stock'];	/* ㉓ ⑯の戻り値からstockを取り出し、表示する */;?></td>
+					<td><?php $book['name'];	/* ⑱ ⑯の戻り値からidを取り出し、表示する */?></td>
+					<td><?php $book['title'];	/* ⑲ ⑯の戻り値からtitleを取り出し、表示する */?></td>
+					<td><?php $book['author'];	/* ⑳ ⑯の戻り値からauthorを取り出し、表示する */?></td>
+					<td><?php $book['salesDate'];	/* ㉑ ⑯の戻り値からsalesDateを取り出し、表示する */?></td>
+					<td><?php $book['price'];	/* ㉒ ⑯の戻り値からpriceを取り出し、表示する */?></td>
+					<td><?php $book['stock'];	/* ㉓ ⑯の戻り値からstockを取り出し、表示する */?></td>
 				</tr>
 				<?php
 				}
