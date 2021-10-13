@@ -1,62 +1,80 @@
-<!-- roni file -->
 <?php
 /* 
-【機能】
-書籍の出荷数を指定する。確定ボタンを押すことで確認画面へ出荷個数を引き継いで遷移す
-る。
+【机能】
+书籍の入荷数o指定する。确定ボタンす押すことで确认画面へ入荷数引き継いで迁移す
+る。なお、在库数は各书100册o最大在库数とする。
 【エラー一覧（エラー表示：発生条件）】
-このフィールドを入力して下さい(吹き出し)：出荷個数が未入力
-出荷する個数が在庫数を超えています：出荷したい個数が在庫数を超えている
+このフィールドの入力して下さい(吹き出し)：入荷个数が未入力
+最大在库数oo超える数は入力できません：现在の在库数と入荷の个数の足した値が最大在库数oo超えている
 数値以外が入力されています：入力された値に数字以外の文字が含まれている
 */
+
 /*
- * ①session_status()の結果が「PHP_SESSION_NONE」と一致するか判定する。
- * 一致した場合はif文の中に入る。
+ * ①session_status()の结果が「PHP_SESSION_NONE」と一致性するか确定する。
+ * 同意した场合はif文の中に入る。
  */
-if (session_status()==PHP_SESSION_NONE) {
-	//②セッションを開始する
-	session_start();
-	$_SESSION["success"]="";
+if ( session_status () == PHP_SESSION_NONE ) {
+	//②セッションの开始する
+	session_start ();
 }
 
-//③SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if ($_SESSION["login"] ==False){
-	//④SESSIONの「error2」に「ログインしてください」と設定する。
-	$_SESSION['error2'] ="ログインしてください";
-	header("Location: login.php");//④ログイン画面へ遷移する。
-	//⑤ログイン画面へ遷移する。
-}	
 
-//⑥データベースへ接続し、接続情報を変数に保存する
 
-//⑦データベースで使用する文字コードを「UTF8」にする
+//③SESSIONの「登录​​」フラグがfalseか判定する。「登录」フラグがfalseの场合はif文の中に入る。
+// if (/* ③の处理oo书く */){
+// //④SESSIONの「error2」に「ログインしてください」と设定する。
+// //⑤ログイン画面へ迁移する。
+// }
 
-$pdo = new PDO("mysql:host=localhost;dbname=zaiko2021_yse;charset=utf8;","zaiko2021_yse", "2021zaiko" );
-    $st = $pdo->query("SELECT * FROM books ");
-//⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
-if(!@($_POST["books"])){
-	//⑨SESSIONの「success」に「出荷する商品が選択されていません」と設定する。
-	//⑩在庫一覧画面へ遷移する。
-	$_SESSION["success"]="入荷する商品が選択されていません";
-	header("Location: zaiko_ichiran.php");
+//⑥データベースへ接続し、接続情报oo変数に保存する
+$dbname = "zaiko2021_yse";
+$host = "localhost";
+$charset = "UTF8";
+$user =  "zaiko2021_yse";
+$password = "2021zaiko";
+$option = [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION];
+
+//⑥データベースで使用する文字コードを「UTF8」にする
+$dsn = "mysql:dbname={$dbname};host={$host};charset={$charset}";
+
+//⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
+//データベースをPDOで接続してみる
+try
+{
+	$pdo = new PDO($dsn,$user,$password,$option);
+	// echo "SUCCESS";
+}catch(PDOException $e)
+{
+	die($e->getMessage());
 }
 
+
+
+//⑧POST「书」値が空か甄别するの场合はif文の中に入る。
+if (empty($_POST["books"])){
+	//⑨SESSIONの「成功」に「入荷する商品が选妃されていません」と设定する。
+	$_SESSION["success"] = "入荷する商品が选妃されていません" ;
+	//⑩在库一覧画面へ迁移する。
+	header("Location：zaiko_ichiran.php");
+}
+//var_dump($_POST);
 function getId($id,$con){
 	/* 
 	 * ⑪書籍を取得するSQLを作成する実行する。
 	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
 	 * SQLの実行結果を変数に保存する。
 	 */
-	// $id=$_POST["id"]);
-	$pdo = new PDO("mysql:host=localhost;dbname=zaiko2021_yse;charset=utf8;","zaiko2021_yse", "2021zaiko" );
-    $st = $con->query("SELECT * FROM books where id =$id");
-
-while($row=$st->fetch() ){
+	$sql = "SELECT * FROM books";
+	$id = htmlspecialchars($id);
+	$sql = "SELECT * FROM books WHERE id = '{$id}'";
+    $statement = $con->query($sql);
+    
 	//⑫実行した結果から1レコード取得し、returnで値を返す。
+	$row = $statement->fetch(PDO::FETCH_ASSOC);
 	return $row;
 }
-}
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -80,18 +98,17 @@ while($row=$st->fetch() ){
 </div>
 
 <form action="nyuka_kakunin.php" method="post">
-<div id="pagebody">
-			<!-- エラーメッセージ -->
-			<div id="error">
-			<?php
-			/*
-			 * ⑬SESSIONの「error」にメッセージが設定されているかを判定する。
-			 * 設定されていた場合はif文の中に入る。
-			 */ 
-			if(@$_SESSION["error"]){
+	<div id="pagebody">
+		<!-- エラーメッセージ -->
+		<div id="error">
+		<?php
+		/*
+		 * ⑬SESSIONの「error」にメッセージが設定されているかを判定する。
+		 * 設定されていた場合はif文の中に入る。
+		 */ 
+		// if(/* ⑬の処理を書く */){
 			//⑭SESSIONの「error」の中身を表示する。
-			echo $_SESSION["error"];
-		}
+		// }
 		?>
 		</div>
 		<div id="center">
@@ -119,14 +136,14 @@ while($row=$st->fetch() ){
 				?>
 				<input type="hidden" value="<?php echo	/* ⑰ ⑯の戻り値からidを取り出し、設定する */$selectedBook["id"];?>" name="books[]">
 				<tr>
-				<th id="id">ID</th>
-						<th id="book_name">書籍名</th>
-						<th id="author">著者名</th>
-						<th id="salesDate">発売日</th>
-						<th id="itemPrice">金額(円)</th>
-						<th id="stock">在庫数</th>
-						<th id="in">出荷数</th>
-					</tr>
+					<td><?php echo	/* ⑱ ⑯の戻り値からidを取り出し、表示する */$selectedBook["id"];?></td>
+					<td><?php echo	/* ⑲ ⑯の戻り値からtitleを取り出し、表示する */$selectedBook["title"];?></td>
+					<td><?php echo	/* ⑳ ⑯の戻り値からauthorを取り出し、表示する */$selectedBook["author"];?></td>
+					<td><?php echo	/* ㉑ ⑯の戻り値からsalesDateを取り出し、表示する */$selectedBook["salesDate"];;?></td>
+					<td><?php echo	/* ㉒ ⑯の戻り値からpriceを取り出し、表示する */$selectedBook["price"];?></td>
+					<td><?php echo	/* ㉓ ⑯の戻り値からstockを取り出し、表示する */$selectedBook["stock"];?></td>
+					<td><input type='text' name='stock[]' size='5' maxlength='11' required></td>
+				</tr>
 				<?php
 				}
 				?>
@@ -135,7 +152,7 @@ while($row=$st->fetch() ){
 		</div>
 	</div>
 </form>
-<!-- フッター 　-->
+<!-- フッター -->
 <div id="footer">
 	<footer>株式会社アクロイト</footer>
 </div>
