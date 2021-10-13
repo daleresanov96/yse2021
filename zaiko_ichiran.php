@@ -11,7 +11,6 @@
 
 //①セッションを開始する
 session_start();
-$_SESSION["account_name"] = $_SESSION["user"];
 
 // ②SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
 if ($_SESSION["login"] == false){
