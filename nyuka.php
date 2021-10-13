@@ -113,24 +113,24 @@ while($row=$st->fetch() ){
 				 */
 				$ids = $_POST["books"];
 
-				foreach($_POST['books'] as $book_id/* ⑮の処理を書く */){
+				foreach($_POST['books'] as $a_id/* ⑮の処理を書く */){
 					// ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑮の処理で取得した値と⑥のDBの接続情報を渡す。
-					$book =getId($book_id,$pdo);
-					return $book;
-				?>
-				<input type="hidden" value="<?php echo	/* ⑰ ⑯の戻り値からi　dを取り出し、設定する */$selectedBook["id"];?>" name="books[]">
-				<tr>
-				<td><?php echo	$book['id'];?></td>
-					<td><?php echo	$book['title'];?></td>
-					<td><?php echo	$book['author'];/* ⑳ ⑯の戻り値からauthorを取り出し、表示する */;?></td>
-					<td><?php echo	$book['salesDate'];/* ㉑ ⑯の戻り値からsalesDateを取り出し、表示する */;?></td>
-					<td><?php echo	$book['price'];/* ㉒ ⑯の戻り値からpriceを取り出し、表示する */;?></td>
-					<td><?php echo	$book['stock'];/* ㉓ ⑯の戻り値からstockを取り出し、表示する */;?></td>
-					<td><input type='text' name='stock[]' size='5' maxlength='11' required></td>
-				</tr>
-				<?php
-				}
-				?>
+					$a =getId($a_id,$pdo);
+					return $a;
+					?>
+					<input type="hidden" value="<?php echo	$a['id'];?>" name="books[]">
+					<tr>
+					<td><?php echo	$a['id'];?></td>
+					<td><?php echo	$a['title'];?></td>
+					<td><?php echo	$a['author'];/* ⑳ ⑯の戻り値からauthorを取り出し、表示する */;?></td>
+					<td><?php echo	$a['salesDate'];/* ㉑ ⑯の戻り値からsalesDateを取り出し、表示する */;?></td>
+					<td><?php echo	$a['price'];/* ㉒ ⑯の戻り値からpriceを取り出し、表示する */;?></td>
+					<td><?php echo	$a['stock'];/* ㉓ ⑯の戻り値からstockを取り出し、表示する */;?></td>
+						<td><input type='text' name='stock[]' size='5' maxlength='11' required></td>
+					</tr>
+					<?php
+					 }
+					?>
 			</table>
 			<button type="submit" id="kakutei" formmethod="POST" name="decision" value="1">確定</button>
 		</div>
