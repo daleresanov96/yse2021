@@ -145,10 +145,10 @@ $count=0;
 						<tr>
 							<td><?php echo	$selectedBook['title'];?></td>
 							<td><?php echo	$selectedBook['stock'];?></td>
-							<td><?php echo	/* ㊱ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */;?></td>
+							<td><?php //echo	/* ㊱ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */?></td>
 						</tr>
-						<input type="hidden" name="books[]" value="<?php echo /* ㊲ ㉝で取得した値を設定する */; ?>">
-						<input type="hidden" name="stock[]" value='<?php echo /* ㊳POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 */;?>'>
+						<input type="hidden" name="books[]" value="<?php //echo /* ㊲ ㉝で取得した値を設定する */?>">
+						<input type="hidden" name="stock[]" value='<?php //echo /* ㊳POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 */;?>'>
 						<?php
 							//㊴ ㉜で宣言した変数をインクリメントで値を1増やす。
 							$count++;
