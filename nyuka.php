@@ -31,7 +31,7 @@ if ($_SESSION["login"] ==False){
 
 //⑦データベースで使用する文字コードを「UTF8」にする
 
-$pdo = new PDO("mysql:host=localhost;dbname=zaiko2021_yse;charset=utf8;","zaiko2021", "2021zaiko" );
+$pdo = new PDO("mysql:host=localhost;dbname=zaiko2021_yse;charset=utf8;","zaiko2021_yse", "2021zaiko" );
     $st = $pdo->query("SELECT * FROM books ");
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
 if(!@($_POST["books"])){
@@ -47,8 +47,14 @@ function getId($id,$con){
 	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
 	 * SQLの実行結果を変数に保存する。
 	 */
+	// $id=$_POST["id"]);
+	$pdo = new PDO("mysql:host=localhost;dbname=zaiko2021_yse;charset=utf8;","zaiko2021_yse", "2021zaiko" );
+    $st = $pdo->query("SELECT * FROM books where id =$id");
 
+while($row=$st->fetch() ){
 	//⑫実行した結果から1レコード取得し、returnで値を返す。
+	return $row;
+}
 }
 ?>
 <!DOCTYPE html>
@@ -74,16 +80,17 @@ function getId($id,$con){
 </div>
 
 <form action="nyuka_kakunin.php" method="post">
-	<div id="pagebody">
-		<!-- エラーメッセージ -->
-		<div id="error">
-		<?php
-		/*
-		 * ⑬SESSIONの「error」にメッセージが設定されているかを判定する。
-		 * 設定されていた場合はif文の中に入る。.
-		 */ 
-		if(/* ⑬の処理を書く */){
+<div id="pagebody">
+			<!-- エラーメッセージ -->
+			<div id="error">
+			<?php
+			/*
+			 * ⑬SESSIONの「error」にメッセージが設定されているかを判定する。
+			 * 設定されていた場合はif文の中に入る。
+			 */ 
+			if(@$_SESSION["error"]){
 			//⑭SESSIONの「error」の中身を表示する。
+			echo $_SESSION["error"];
 		}
 		?>
 		</div>

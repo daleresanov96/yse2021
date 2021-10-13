@@ -48,16 +48,18 @@ $password="";
  $_SESSION['login']=true;
 // 		//⑩在庫一覧画面へ遷移する
 	header("location:zaiko_ichiran.php");
-// 	}else{
+ 	}else{
 // 		//⑪名前もしくはパスワードが間違っていた場合は、「ユーザー名かパスワードが間違っています」という文言をメッセージを入れる変数に設定する
+         $error_message="ユーザー名かパスワードが間違っています";
  	}
 }
 
 //⑫SESSIONの「error2」に値が入っているか判定する。入っていた場合はif文の中に入る
-// if (/* ⑫の処理を書く */) {
+ if (isset($_REQUEST['check'])) {
 // 	//⑬SESSIONの「error2」の値をエラーメッセージを入れる変数に設定する。
 // 	//⑭SESSIONの「error2」にnullを入れる。
-// }
+   echo "null";
+ }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -72,10 +74,11 @@ $password="";
 		<?php
 
 		//⑮エラーメッセージの変数に入っている値を表示する
-		// echo "<div id='error'>", /* ⑮の変数を書く */, "</div>";
+		 echo "<div id='error'>", "ユーザー名かパスワードが間違えています。","</div>";
+
 
 		//⑯メッセージの変数に入っている値を表示する
-		// echo "<div id='msg'>", /* ⑯の変数を書く */, "</div>";
+		 echo "<div id='msg'>", "ログインしてください。", "</div>";
 		?>
 		<form action="login.php" method="post" id="log">
 			<p>
