@@ -118,7 +118,7 @@ while($row=$st->fetch() ){
 					$book =getId($book_id,$pdo);
 					return $book;
 				?>
-				<input type="hidden" value="<?php echo	/* ⑰ ⑯の戻り値からidを取り出し、設定する */$selectedBook["id"];?>" name="books[]">
+				<input type="hidden" value="<?php echo	/* ⑰ ⑯の戻り値からi　dを取り出し、設定する */$selectedBook["id"];?>" name="books[]">
 				<tr>
 				<td><?php echo	$book['id'];?></td>
 					<td><?php echo	$book['title'];?></td>
