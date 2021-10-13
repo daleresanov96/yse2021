@@ -30,7 +30,7 @@ if (/* ③の処理を書く */!$_SESSION["login"]){
 
 //⑥データベースへ接続し、接続情報を変数に保存する
 //⑦データベースで使用する文字コードを「UTF8」にする
-$pdo = new PDO("mysql:host=localhost;dbname=zaiko2021_yse;charset=utf8;","zaiko2021", "2021zaiko" );
+$pdo = new PDO("mysql:host=localhost;dbname=zaiko2021_yse;charset=utf8;","zaiko2021_yse", "2021zaiko" );
 
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
 
@@ -48,10 +48,10 @@ function getId($id,$con){
 	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
 	 * SQLの実行結果を変数に保存する。
 	 */
-	
-	$pdo = new PDO("mysql:host=localhost;dbname=zaiko2019_yse;charset=utf8;","zaiko2019_yse", "2019zaiko" );
-    $st = $pdo->query("SELECT * FROM books where id =$id");
+    $st = $pdo->query("SELECT * FROM books where id ={$id}");
+	$row = $st->fetch(PDO::FETCH_ASSOC);
 	//⑫実行した結果から1レコード取得し、returnで値を返す。
+	return $row;
 }
 ?>
 <!DOCTYPE html>
@@ -85,8 +85,9 @@ function getId($id,$con){
 		 * ⑬SESSIONの「error」にメッセージが設定されているかを判定する。
 		 * 設定されていた場合はif文の中に入る。
 		 */ 
-		if(/* ⑬の処理を書く */){
+		if(@$_SESSION["error"]){
 			//⑭SESSIONの「error」の中身を表示する。
+			echo $_SESSION["error"];
 		}
 		?>
 		</div>
@@ -107,10 +108,12 @@ function getId($id,$con){
 				/*
 				 * ⑮POSTの「books」から一つずつ値を取り出し、変数に保存する。
 				 */
-				foreach(/* ⑮の処理を書く */){
+				foreach($_POST['books'] as $book_id/* ⑮の処理を書く */){
 					// ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑮の処理で取得した値と⑥のDBの接続情報を渡す。
+					$book =getId($book_id,$pdo);
+					return $book;
 				?>
-				<input type="hidden" value="<?php $book['id']	/* ⑰ ⑯の戻り値からidを取り出し、設定する */;?>" name="books[]">
+				<input type="hidde+n" value="<?php $book['id']	/* ⑰ ⑯の戻り値からidを取り出し、設定する */;?>" name="books[]">
 				<tr>
 					<td><?php $book['name'];	/* ⑱ ⑯の戻り値からidを取り出し、表示する */;?></td>
 					<td><?php $book['title'];	/* ⑲ ⑯の戻り値からtitleを取り出し、表示する */;?></td>
