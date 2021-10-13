@@ -133,7 +133,7 @@ while($row=$st->fetch() ){
 		</div>
 	</div>
 </form>
-<!-- フッター -->
+<!-- フッター 　-->
 <div id="footer">
 	<footer>株式会社アクロイト</footer>
 </div>
