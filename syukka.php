@@ -49,7 +49,7 @@ function getId($id,$con){
 	 * SQLの実行結果を変数に保存する。
 	 */
 	
-	$pdo = new PDO("mysql:host=localhost;dbname=zaiko2019_yse;charset=utf8;","zaiko2019", "2019zaiko" );
+	$pdo = new PDO("mysql:host=localhost;dbname=zaiko2019_yse;charset=utf8;","zaiko2019_yse", "2019zaiko" );
     $st = $pdo->query("SELECT * FROM books where id =$id");
 	//⑫実行した結果から1レコード取得し、returnで値を返す。
 }
@@ -110,15 +110,14 @@ function getId($id,$con){
 				foreach(/* ⑮の処理を書く */){
 					// ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑮の処理で取得した値と⑥のDBの接続情報を渡す。
 				?>
-				<input type="hidden" value="<?php echo	/* ⑰ ⑯の戻り値からidを取り出し、設定する */;?>" name="books[]">
+				<input type="hidden" value="<?php $book['id']	/* ⑰ ⑯の戻り値からidを取り出し、設定する */;?>" name="books[]">
 				<tr>
-					<td><?php echo	/* ⑱ ⑯の戻り値からidを取り出し、表示する */;?></td>
-					<td><?php echo	/* ⑲ ⑯の戻り値からtitleを取り出し、表示する */;?></td>
-					<td><?php echo	/* ⑳ ⑯の戻り値からauthorを取り出し、表示する */;?></td>
-					<td><?php echo	/* ㉑ ⑯の戻り値からsalesDateを取り出し、表示する */;?></td>
-					<td><?php echo	/* ㉒ ⑯の戻り値からpriceを取り出し、表示する */;?></td>
-					<td><?php echo	/* ㉓ ⑯の戻り値からstockを取り出し、表示する */;?></td>
-					<td><input type='text' name='stock[]' size='5' maxlength='11' required></td>
+					<td><?php $book['name'];	/* ⑱ ⑯の戻り値からidを取り出し、表示する */;?></td>
+					<td><?php $book['title'];	/* ⑲ ⑯の戻り値からtitleを取り出し、表示する */;?></td>
+					<td><?php $book['author'];	/* ⑳ ⑯の戻り値からauthorを取り出し、表示する */;?></td>
+					<td><?php $book['salesDate'];	/* ㉑ ⑯の戻り値からsalesDateを取り出し、表示する */;?></td>
+					<td><?php $book['price'];	/* ㉒ ⑯の戻り値からpriceを取り出し、表示する */;?></td>
+					<td><?php $book['stock'];	/* ㉓ ⑯の戻り値からstockを取り出し、表示する */;?></td>
 				</tr>
 				<?php
 				}
