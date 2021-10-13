@@ -11,9 +11,8 @@
 
 //①セッションを開始する
 session_start();
-$_SESSION["account_name"] = $_SESSION["user"];
 
-// ②SESSIONの「login」フラグがfalseか判定sする。「login」フラグがfalseの場合はif文の中に入る。
+// ②SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
 if ($_SESSION["login"] == false){
 // 	// ③SESSIONの「error2」に「ログインしてください」と設定する。
 	$_SESSION["error2"] = "ログインしてください";
