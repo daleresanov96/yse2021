@@ -29,9 +29,9 @@ if (/* ③の処理を書く */!$_SESSION["login"]){
 }
 
 //⑥データベースへ接続し、接続情報を変数に保存する
-$link = mysql_connect("127.0.0.1","zaiko2021_yse","2021ziko");
+$pdo = new PDO("mysql:host=localhost;dbname=zaiko2019_yse;charset=utf8;","zaiko2019", "2019zaiko" );
 //⑦データベースで使用する文字コードを「UTF8」にする
-mysql_set_charset("utf8",$link);
+mysql_set_charset("utf8",$pdo);
 
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
 
@@ -49,7 +49,8 @@ function getId($id,$con){
 	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
 	 * SQLの実行結果を変数に保存する。
 	 */
-
+	$pdo = new PDO("mysql:host=localhost;dbname=zaiko2019_yse;charset=utf8;","zaiko2019", "2019zaiko" );
+    $st = $pdo->query("SELECT * FROM books where id =$id");
 	//⑫実行した結果から1レコード取得し、returnで値を返す。
 }
 ?>
