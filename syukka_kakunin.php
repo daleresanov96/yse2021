@@ -17,8 +17,8 @@ function getByid($id,$con){
 	 * SQLの実行結果を変数に保存する。
 	 */
 	$sql = "SELECT * FROM books id = {$id}";
+	$sql = "SELECT * FROM books WHERE id = {$id}";
 	$stmt = $con->query($sql);
-	//③実行した結果から1レコード取得し、returnで値を返す。
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
@@ -28,11 +28,18 @@ function updateByid($id,$con,$total){
 	 * 引数で受け取った$totalの値で在庫数を上書く。
 	 * その際にWHERE句でメソッドの引数に$idに一致する書籍のみ取得する。
 	 */
+	$sql = "UPDATE books SET stock=$total WHERE id=$id";
+		return $result = $con->query($sql);
 
+		 if ($result->num_rows > 0) {
+		 	while($row = $result->fetch_assoc()) {
+		 		return $row;
+		 	}	
+		 }
 }
 
 //⑤SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if (isset($_SESSION['login']) && $_SESSION['login']){
+if ($_SESSION["login"] ==False){
 	//⑥SESSIONの「error2」に「ログインしてください」と設定する。
 	$_SESSION['error2'] = 'ログインしてください';
 	//⑦ログイン画面へ遷移する。
@@ -59,52 +66,72 @@ try {
 }
 //⑩書籍数をカウントするための変数を宣言し、値を0で初期化する
 $book_count = 0;
+$index = 0;
 //⑪POSTの「books」から値を取得し、変数に設定する。
 $book_ids = $_POST['books'];
-foreach($book_ids as $book_id){
+foreach($_POST['books'] as $books){
 	/*
 	 * ⑫POSTの「stock」について⑩の変数の値を使用して値を取り出す。
 	 * 半角数字以外の文字が設定されていないかを「is_numeric」関数を使用して確認する。
 	 * 半角数字以外の文字が入っていた場合はif文の中に入る。
 	 */
-	if (/* ⑫の処理を書く */) {
+	if (!is_numeric($_POST['stock'][$count])) {
 		//⑬SESSIONの「error」に「数値以外が入力されています」と設定する。
+		$_SESSION['error']="数値以外が入力されています";
 		//⑭「include」を使用して「syukka.php」を呼び出す。
+		include 'syukka.php';
 		//⑮「exit」関数で処理を終了する。
+		exit();
 	}
 
 	//⑯「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に⑪の処理で取得した値と⑧のDBの接続情報を渡す。
-
+	$dtb=getByid($books,$con);
 	//⑰ ⑯で取得した書籍の情報の「stock」と、⑩の変数を元にPOSTの「stock」から値を取り出して書籍情報の「stock」から値を引いた値を変数に保存する。
-
+	$total=$dtb['stock']-$_POST['stock'][$count];
 	//⑱ ⑰の値が0未満か判定する。0未満の場合はif文の中に入る。
-	if(/* ⑱の処理を行う */){
+	if($total<0){
 		//⑲SESSIONの「error」に「出荷する個数が在庫数を超えています」と設定する。
+		$_SESSION['error']="出荷する個数が在庫数を超えています";
 		//⑳「include」を使用して「syukka.php」を呼び出す。
+		include 'syukka.php';
 		//㉑「exit」関数で処理を終了する。
+		exit();
 	}
 	
 	//㉒ ⑩で宣言した変数をインクリメントで値を1増やす。
-	$book_count++;
+	$count++;
 }
 
 /*
  * ㉓POSTでこの画面のボタンの「add」に値が入ってるか確認する。
  * 値が入っている場合は中身に「ok」が設定されていることを確認する。
  */
-if(/* ㉓の処理を書く */){
+if(@$_POST['add']=="ok"){
 	//㉔書籍数をカウントするための変数を宣言し、値を0で初期化する。
-
+	$count=0;
+	$result;
 	//㉕POSTの「books」から値を取得し、変数に設定する。
-	foreach(/* ㉕の処理を書く */){
+	foreach($_POST['books']as $books){
 		//㉖「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉕の処理で取得した値と⑧のDBの接続情報を渡す。
+		$book = getById($book_id, $pdo);
 		//㉗ ㉖で取得した書籍の情報の「stock」と、㉔の変数を元にPOSTの「stock」から値を取り出して書籍情報の「stock」から値を引いた値を変数に保存する。
+		$dtb=getByid($books,$con);
+		$total=$dtb['stock']-$_POST['stock'][$count];
 		//㉘「updateByid」関数を呼び出す。その際に引数に㉕の処理で取得した値と⑧のDBの接続情報と㉗で計算した値を渡す。
+		$result=updateByid($books,$con,$total);
 		//㉙ ㉔で宣言した変数をインクリメントで値を1増やす。
+		$count++;
 	}
 
 	//㉚SESSIONの「success」に「入荷が完了しました」と設定する。
 	//㉛「header」関数を使用して在庫一覧画面へ遷移する。
+	echo $result;
+
+if($result){
+
+	$_SESSION['success'] ="入荷が完了しました";
+	header("Location: zaiko_ichiran.php");//④ログイン画面へ遷移する。
+}
 }
 ?>
 <!DOCTYPE html>
@@ -132,21 +159,22 @@ if(/* ㉓の処理を書く */){
 				<tbody>
 					<?php 
 					//㉜書籍数をカウントするための変数を宣言し、値を0で初期化する。
-
+					$count=0;
 					//㉝POSTの「books」から値を取得し、変数に設定する。
-					foreach($book_ids as $book_id){
+					foreach($_POST['books'] as $books){
 						//㉞「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉜の処理で取得した値と⑧のDBの接続情報を渡す。
-						$book = getById($book_id, $pdo);
+						$a =getbyId($books,$con);
 					?>
 					<tr>
-					<td><?= $book['title'] ?></td>
-						<td><?= $book['stock'] ?></td>
-						<td><?= $stock = $_POST['stock'][$index] ?></td>
+						<td><?php echo	$a['title']/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */;?></td>
+						<td><?php echo	$a['stock']/* ㊱ ㉞で取得した書籍情報からstockを表示する。 */;?></td>
+						<td><?php echo	$_POST['stock'][$count]/* ㊲ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */;?></td>
 					</tr>
-					<input type="hidden" name="books[]" value="<?= $book_id ?>">
-					<input type="hidden" name="stock[]" value='<?= $stock ?>'>
+					<input type="hidden" name="books[]" value="<?php echo $books/* ㊳ ㉝で取得した値を設定する */;?>">
+					<input type="hidden" name="stock[]" value='<?php echo $_POST['stock'][$count]/* ㊴「POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 */;?>'>
 					<?php
 						//㊵ ㉜で宣言した変数をインクリメントで値を1増やす。
+					$count++;
 					}
 					?>
 				</tbody>
