@@ -111,7 +111,7 @@ while($row=$st->fetch() ){
 				/*
 				 * ⑮POSTの「books」から一つずつ値を取り出し、変数に保存する。
 				 */
-				foreach(/* ⑮の処理を書く */){
+				foreach(/* ⑮の処理を書く */
 					// ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑮の処理で取得した値と⑥のDBの接続情報を渡す。
 				?>
 				<input type="hidden" value="<?php echo	/* ⑰ ⑯の戻り値からidを取り出し、設定する */;?>" name="books[]">
@@ -125,7 +125,7 @@ while($row=$st->fetch() ){
 					<td><input type='text' name='stock[]' size='5' maxlength='11' required></td>
 				</tr>
 				<?php
-				}
+				
 				?>
 			</table>
 			<button type="submit" id="kakutei" formmethod="POST" name="decision" value="1">確定</button>
