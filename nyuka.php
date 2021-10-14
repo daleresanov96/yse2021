@@ -1,4 +1,3 @@
-<!-- roni file -->
 <?php
 /* 
 【機能】
@@ -71,6 +70,7 @@ while($row=$st->fetch() ){
 </div>
 
 <!-- メニュー -->
+// .
 <div id="menu">
 	<nav>
 		<ul>
@@ -119,14 +119,14 @@ while($row=$st->fetch() ){
 				?>
 				<input type="hidden" value="<?php echo	/* ⑰ ⑯の戻り値からidを取り出し、設定する */$selectedBook["id"];?>" name="books[]">
 				<tr>
-				<th id="id">ID</th>
-						<th id="book_name">書籍名</th>
-						<th id="author">著者名</th>
-						<th id="salesDate">発売日</th>
-						<th id="itemPrice">金額(円)</th>
-						<th id="stock">在庫数</th>
-						<th id="in">出荷数</th>
-					</tr>
+					<td><?php echo	/* ⑱ ⑯の戻り値からidを取り出し、表示する */$selectedBook["id"];?></td>
+					<td><?php echo	/* ⑲ ⑯の戻り値からtitleを取り出し、表示する */$selectedBook["title"];?></td>
+					<td><?php echo	/* ⑳ ⑯の戻り値からauthorを取り出し、表示する */$selectedBook["author"];?></td>
+					<td><?php echo	/* ㉑ ⑯の戻り値からsalesDateを取り出し、表示する */$selectedBook["salesDate"];;?></td>
+					<td><?php echo	/* ㉒ ⑯の戻り値からpriceを取り出し、表示する */$selectedBook["price"];?></td>
+					<td><?php echo	/* ㉓ ⑯の戻り値からstockを取り出し、表示する */$selectedBook["stock"];?></td>
+					<td><input type='text' name='stock[]' size='5' maxlength='11' required></td>
+				</tr>
 				<?php
 				}
 				?>
