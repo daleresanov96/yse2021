@@ -38,6 +38,7 @@ if(!@($_POST["books"])){
 	//⑩在庫一覧画面へ遷移する。
 	$_SESSION["success"]="入荷する商品が選択されていません";
 	header("Location: zaiko_ichiran.php");
+	exit;
 }
 
 function getId($id,$con){
@@ -104,7 +105,7 @@ while($row=$st->fetch() ){
 						<th id="salesDate">発売日</th>
 						<th id="itemPrice">金額(円)</th>
 						<th id="stock">在庫数</th>
-						<th id="in">出荷数</th>
+						<th id="in">入力数</th>
 					</tr>
 				</thead>
 				<?php 
