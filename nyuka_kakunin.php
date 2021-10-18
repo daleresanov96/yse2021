@@ -43,6 +43,7 @@ if ($_SESSION["login"] == false){
 	//⑦ログイン画面へ遷移する。
 	header("Location: login.php");
 }
+///// dont copy <div class=""></div>
 
 //⑧データベースへ接続し、接続情報を変数に保存する
 $dbname = "zaiko2021_yse";
@@ -81,7 +82,7 @@ foreach($_POST['books'] as$book_id){
 		//⑮「exit」関数で処理を終了する。
 		exit;
 	}
-
+//// dont copy <div class=""></div>
 	//⑯「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に⑪の処理で取得した値と⑧のDBの接続情報を渡す。
     $book=getByid($book_id,$pdo);
 	//⑰ ⑯で取得した書籍の情報の「stock」と、⑩の変数を元にPOSTの「stock」から値を取り出し、足した値を変数に保存する。
