@@ -16,13 +16,14 @@ if (session_status() === PHP_SESSION_NONE) {
 	//②セッションを開始する
 	session_start();
 }
+
 //③SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if (empty($_SESSION['login']) && !$_SESSION['login']) {
-	//④SESSIONの「error2」に「ログインしてください」と設定する。
+if (empty($_SESSION['login'])){
 	$_SESSION['error2'] = 'ログインしてください';
-	//⑤ログイン画面へ遷移する。
 	header('Location: login.php');
 }
+
+
 //⑥データベースへ接続し、接続情報を変数に保存する
 //⑦データベースで使用する文字コードを「UTF8」にする
 $db_name = 'zaiko2021_yse';
@@ -30,6 +31,7 @@ $db_host = 'localhost';
 $db_port = '3306';
 $db_user = 'zaiko2021_yse';
 $db_password = '2021zaiko';
+
 $dsn = "mysql:dbname={$db_name};host={$db_host};charset=utf8;port={$db_port}";
 try {
 	$pdo = new PDO($dsn, $db_user, $db_password);
@@ -39,12 +41,16 @@ try {
 	echo "接続失敗: " . $e->getMessage();
 	exit;
 }
+
+
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
 // if(/* ⑧の処理を行う */){
 // 	//⑨SESSIONの「success」に「出荷する商品が選択されていません」と設定する。
 // 	//⑩在庫一覧画面へ遷移する。
 // }
+
 $books = fetchBooks($_POST['books'], $pdo);
+
 function getId($id, $con)
 {
 	/* 
@@ -54,30 +60,36 @@ function getId($id, $con)
 	 */
 	$sql = "SELECT * FROM books WHERE id = {$id}";
 	$stmt = $con->query($sql);
+
 	//⑫実行した結果から1レコード取得し、returnで値を返す。
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
 function fetchBooks($ids, $pdo)
 {
 	$id = implode(',', $ids);
 	$condition = "id in ($id)";
 	$sql = "SELECT * FROM books WHERE {$condition}";
 	$stmt = $pdo->query($sql);
+
 	return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>出荷</title>
 	<link rel="stylesheet" href="css/ichiran.css" type="text/css" />
 </head>
+
 <body>
 	<!-- ヘッダ -->
 	<div id="header">
 		<h1>出荷</h1>
 	</div>
+
 	<!-- メニュー -->
 	<div id="menu">
 		<nav>
@@ -86,6 +98,7 @@ function fetchBooks($ids, $pdo)
 			</ul>
 		</nav>
 	</div>
+
 	<form action="syukka_kakunin.php" method="post">
 		<div id="pagebody">
 			<!-- エラーメッセージ -->
@@ -116,7 +129,7 @@ function fetchBooks($ids, $pdo)
 					<!-- ⑮POSTの「books」から一つずつ値を取り出し、変数に保存する。
     				 ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑮の処理で取得した値と⑥のDBの接続情報を渡す。 -->
 					<?php foreach ($books as $book) : ?>
-						<input type="hidden" value="<?= $id ?>" name="books[]">
+						<input type="hidden" value="<?= $book['id'] ?>" name="books[]">
 						<tr>
 							<td><?= $book['id'] ?></td>
 							<td><?= $book['title'] ?></td>
@@ -137,4 +150,5 @@ function fetchBooks($ids, $pdo)
 		<footer>株式会社アクロイト</footer>
 	</div>
 </body>
+
 </html>
