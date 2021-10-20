@@ -49,7 +49,11 @@ try {
 // 	//⑩在庫一覧画面へ遷移する。
 // }
 
-$books = fetchBooks($_POST['books'], $pdo);
+if(!@($_POST["books"])){
+	$_SESSION["success"]="出荷する商品が選択されていません";
+	header("Location: zaiko_ichiran.php");
+	exit;
+}
 
 function getId($id, $con)
 {
