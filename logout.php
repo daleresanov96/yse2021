@@ -10,6 +10,10 @@ session_start();
 if(isset($_SESSION["user"])) {
 unset($_SESSION["user"]);
 //③ログイン画面へ遷移する。
+<<<<<<< HEAD
 header("Location: login.php");
 }
 ?>
+=======
+header("Location:login.php");
+>>>>>>> 7f2fc371cd0d02aa4de278309f31882c04304b6f

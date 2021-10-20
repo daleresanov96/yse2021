@@ -13,10 +13,10 @@
 session_start();
 
 // ②SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if ($_SESSION["login"] == false){
-// 	// ③SESSIONの「error2」に「ログインしてください」と設定する。
+if ($_SESSION["login"] == false) {
+	// 	// ③SESSIONの「error2」に「ログインしてください」と設定する。
 	$_SESSION["error2"] = "ログインしてください";
-// 	// ④ログイン画面へ遷移する。
+	// 	// ④ログイン画面へ遷移する。
 	header("Location: login.php");
 }
 
@@ -26,19 +26,17 @@ $host = "localhost";
 $charset = "UTF8";
 $user =  "zaiko2021_yse";
 $password = "2021zaiko";
-$option = [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION];
+$option = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
 
 //⑥データベースで使用する文字コードを「UTF8」にする
 $dsn = "mysql:dbname={$dbname};host={$host};charset={$charset}";
 
 //⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
 //データベースをPDOで接続してみる
-try
-{
-	$pdo = new PDO($dsn,$user,$password,$option);
+try {
+	$pdo = new PDO($dsn, $user, $password, $option);
 	// echo "SUCCESS";
-}catch(PDOException $e)
-{
+} catch (PDOException $e) {
 	die($e->getMessage());
 }
 //SQL
@@ -50,11 +48,13 @@ $statement = $pdo->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
 	<meta charset="UTF-8">
 	<title>書籍一覧</title>
 	<link rel="stylesheet" href="css/ichiran.css" type="text/css" />
 </head>
+
 <body>
 	<div id="header">
 		<h1>書籍一覧</h1>
@@ -68,20 +68,20 @@ $statement = $pdo->query($sql);
 				 * ⑧SESSIONの「success」にメッセージが設定されているかを判定する。
 				 * 設定されていた場合はif文の中に入る。
 				 */
-				
-				 if(isset($_SESSION["success"])){
-				// // 	//⑨SESSIONの「success」の中身を表示する。
-				 	echo "<p>".@$_SESSION["success"]."</p>";
-				 	//var_dump($_SESSION["success"]);
-				 }
+
+				if (isset($_SESSION["success"])) {
+					// // 	//⑨SESSIONの「success」の中身を表示する。
+					echo "<p>" . @$_SESSION["success"] . "</p>";
+					//var_dump($_SESSION["success"]);
+				}
 				?>
 			</div>
-			
+
 			<!-- 左メニュー -->
 			<div id="left">
 				<p id="ninsyou_ippan">
 					<?php
-						echo @$_SESSION["account_name"];
+					echo @$_SESSION["account_name"];
 					?><br>
 					<button type="button" id="logout" onclick="location.href='logout.php'">ログアウト</button>
 				</p>
@@ -108,7 +108,7 @@ $statement = $pdo->query($sql);
 					<tbody>
 						<?php
 						//⑩SQLの実行結果の変数から1レコードのデータを取り出す。レコードがない場合はループを終了する。
-						while($books= $statement->fetch(PDO::FETCH_ASSOC)){
+						while ($books = $statement->fetch(PDO::FETCH_ASSOC)) {
 							//⑪extract変数を使用し、1レコードのデータを渡す。
 							$book = array(
 								"id" => $books["id"],
@@ -121,13 +121,13 @@ $statement = $pdo->query($sql);
 							extract($book);
 
 							echo "<tr id='book'>";
-							echo "<td id='check'><input type='checkbox' name='books[]' value=".$books["id"]."></td>";
-							echo "<td id='id'>".$id."</td>";
-							echo "<td id='title'>".$title."</td>";
-							echo "<td id='author'>".$author."</td>";
-							echo "<td id='date'>".$date."</td>";
-							echo "<td id='price'>".$price."</td>";
-							echo "<td id='stock'>".$stock."</td>";
+							echo "<td id='check'><input type='checkbox' name='books[]' value=" . $books["id"] . "></td>";
+							echo "<td id='id'>" . $id . "</td>";
+							echo "<td id='title'>" . $title . "</td>";
+							echo "<td id='author'>" . $author . "</td>";
+							echo "<td id='date'>" . $date . "</td>";
+							echo "<td id='price'>" . $price . "</td>";
+							echo "<td id='stock'>" . $stock . "</td>";
 
 							echo "</tr>";
 						}
@@ -141,4 +141,5 @@ $statement = $pdo->query($sql);
 		<footer>株式会社アクロイト</footer>
 	</div>
 </body>
+
 </html>
