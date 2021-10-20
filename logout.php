@@ -10,4 +10,4 @@ session_start();
 unset($_SESSION["id"]);
 unset($_SESSION["name"]);
 //③ログイン画面へ遷移する。
-header("Location:login.php")
+header("Location:login.php");
