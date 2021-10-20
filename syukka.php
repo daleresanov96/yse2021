@@ -48,12 +48,12 @@ try {
 // 	//⑨SESSIONの「success」に「出荷する商品が選択されていません」と設定する。
 // 	//⑩在庫一覧画面へ遷移する。
 // }
-
 if(!@($_POST["books"])){
 	$_SESSION["success"]="出荷する商品が選択されていません";
 	header("Location: zaiko_ichiran.php");
 	exit;
 }
+$books = fetchBooks($_POST['books'], $pdo);
 
 function getId($id, $con)
 {
