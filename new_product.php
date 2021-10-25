@@ -76,7 +76,7 @@ function getlastID($pdo){
 		</nav>
 	</div>
 
-	<form action="add.php" method="post">
+	<form action="new.php" method="post">
 		<div id="pagebody">
 			<!-- エラーメッセージ -->
 			<div id="error">
