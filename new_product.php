@@ -34,10 +34,10 @@ try{
 }
 
 //// last id will add 
-$lastId=(int)getlastID($pdo)+1;
+$lastId=(int)getID($pdo)+1;
 
 //// last id method
-function getlastID($pdo){
+function getID($pdo){
 
  $sql="SELECT COUNT(id) AS count FROM books";
  /// fetch 
