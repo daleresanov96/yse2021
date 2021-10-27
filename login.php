@@ -57,7 +57,7 @@ if (isset($_POST['decision']) && $_POST['decision'] == 1) {
 		header("Location: zaiko_ichiran.php");
 	}
 	else{
-		$msg = "ユーザー名かパスワードがまちがっています。";
+		$msg = "IDまたはパスワードが異なっています";
 	}
 }
 // 	//⑧名前に「yse」、パスワードに「2021」と設定されているか確認する。設定されていた場合はif文の中に入る
