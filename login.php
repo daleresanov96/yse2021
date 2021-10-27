@@ -34,7 +34,7 @@ if (isset($_POST['decision']) && $_POST['decision'] == 1) {
 	
 	
 }else{
-	$msg = "ログインしてください。";
+	$msg = "名前かパスワードが未入力です";
 }
 }
 
