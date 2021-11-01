@@ -41,6 +41,13 @@ if (empty($_SESSION['login'])) {
     header('Location: login.php');
     exit;
 }
+if (!@($_POST["books"])) {
+	//⑨SESSIONの「success」に「出荷する商品が選択されていません」と設定する。
+	//⑩在庫一覧画面へ遷移する。
+	$_SESSION["success"] = "入荷する商品が選択されていません";
+	header("Location: zaiko_ichiran.php");
+	exit;
+}
 
 
 //⑧データベースへ接続し、接続情報を変数に保存する
