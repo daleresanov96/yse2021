@@ -39,11 +39,11 @@ $lastId=(int)getID($pdo)+1;
 //// last id method
 function getID($pdo){
 
- $sql="SELECT COUNT(id) AS count FROM books";
+ $sql="SELECT MAX(id) AS max_id FROM books";
  /// fetch 
  $statement=$pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
 
- return $statement["count"];
+ return $statement["max_id"];
  
 
 
@@ -76,7 +76,7 @@ function getID($pdo){
 		</nav>
 	</div>
 
-	<form action="new.php" method="post">
+	<form action=" " method="post">
 		<div id="pagebody">
 			<!-- エラーメッセージ -->
 			<div id="error">
